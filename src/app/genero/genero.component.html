@@ -1,0 +1,23 @@
+<div class="container">
+  <h1>Lista de Gêneros</h1>
+  <br />
+  <input type="text" class="form-control"
+    [(ngModel)]="teste">
+  <br />
+    {{teste}}
+  <br />
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Código</th>
+        <th>Nome</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let genero of generos">
+        <td>{{genero.id}}</td>
+        <td>{{genero.nome}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
