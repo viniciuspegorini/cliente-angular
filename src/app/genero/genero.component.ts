@@ -10,7 +10,6 @@ import { Genero } from '../model/genero';
 export class GeneroComponent implements OnInit {
 
   generos: Genero[];
-  teste: string = '1234';
 
   constructor(private generoService: GeneroService) { }
 
