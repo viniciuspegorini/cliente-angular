@@ -5,6 +5,18 @@ import { FormsModule } from '@angular/forms';
 
 // Imports PrimeNG
 import {TableModule} from 'primeng/table';
+import {CalendarModule} from 'primeng/calendar';
+import {ConfirmDialogModule} from 'primeng/confirmdialog';
+import {GrowlModule} from 'primeng/growl';
+import {DialogModule} from 'primeng/dialog';
+import {ConfirmationService} from 'primeng/api';
+import {DropdownModule} from 'primeng/dropdown';
+import {AutoCompleteModule} from 'primeng/autocomplete';
+import {SpinnerModule} from 'primeng/spinner';
+import {FileUploadModule} from 'primeng/fileupload';
+import {TabViewModule} from 'primeng/tabview';
+import {InputTextModule} from 'primeng/inputtext';
+import {InputTextareaModule} from 'primeng/inputtextarea';
 
 import { AppComponent } from './app.component';
 import { MenuComponent } from './menu/menu.component';
@@ -15,6 +27,8 @@ import { GeneroService } from './genero/genero.service';
 import { HttpClientModule } from '@angular/common/http';
 import { ProdutoraComponent } from './produtora/produtora.component';
 import { ProdutoraService } from './produtora/produtora.service';
+import { SerieComponent } from './serie/serie.component';
+import { SerieService } from './serie/serie.service';
 
 @NgModule({
   declarations: [
@@ -22,7 +36,8 @@ import { ProdutoraService } from './produtora/produtora.service';
     MenuComponent,
     IndexComponent,
     GeneroComponent,
-    ProdutoraComponent
+    ProdutoraComponent,
+    SerieComponent
   ],
   imports: [
     BrowserModule,
@@ -30,11 +45,24 @@ import { ProdutoraService } from './produtora/produtora.service';
     HttpClientModule,
     FormsModule,
     BrowserAnimationsModule,
-    TableModule
+    TableModule,
+    ConfirmDialogModule,
+    GrowlModule,
+    DialogModule,
+    CalendarModule,
+    DropdownModule,
+    SpinnerModule,
+    AutoCompleteModule,
+    TabViewModule,
+    FileUploadModule,
+    InputTextModule,
+    InputTextareaModule
   ],
   providers: [
     GeneroService,
-    ProdutoraService
+    ProdutoraService,
+    SerieService,
+    ConfirmationService
   ],
   bootstrap: [AppComponent]
 })
