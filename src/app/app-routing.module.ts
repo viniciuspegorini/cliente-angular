@@ -4,13 +4,11 @@ import {Routes, RouterModule} from '@angular/router';
 import { IndexComponent } from './index/index.component';
 import { GeneroComponent } from './genero/genero.component';
 import { ProdutoraComponent } from './produtora/produtora.component';
-import { SerieComponent } from './serie/serie.component';
 
 const routes: Routes = [
   {path: '', component: IndexComponent},
   {path: 'genero', component: GeneroComponent},
-  {path: 'produtora', component: ProdutoraComponent},
-  {path: 'serie', component: SerieComponent}
+  {path: 'produtora', component: ProdutoraComponent}
 ];
 
 @NgModule({
