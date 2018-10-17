@@ -12,7 +12,7 @@ export abstract class CrudService<T, ID> {
 
     constructor(protected url: string,
         protected http: HttpClient) {
-        }
+    }
 
     protected getUrl(): string {
         return this.url;
@@ -23,9 +23,7 @@ export abstract class CrudService<T, ID> {
         return this.http.get<T[]>(url);
     }
 
-    findPageable(page: number, size: number,
-        order?: string,
-        asc?: boolean): Observable<Page<T>> {
+    findPageable(page: number, size: number, order?: string, asc?: boolean): Observable<Page<T>> {
         let url = `${this.getUrl()}/page/
         ?page=${page}&size=${size}`;
         if (order) {
@@ -54,9 +52,7 @@ export abstract class CrudService<T, ID> {
 
     save(t: T): Observable<T> {
         const url = `${this.getUrl()}`;
-        return this.http.post<T>(url,
-            JSON.stringify(t),
-            httpOptions);
+        return this.http.post<T>(url, JSON.stringify(t), httpOptions);
     }
 
     delete(id: ID): Observable<void> {
