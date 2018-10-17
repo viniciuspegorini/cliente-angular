@@ -24,8 +24,7 @@ export abstract class CrudService<T, ID> {
     }
 
     findPageable(page: number, size: number, order?: string, asc?: boolean): Observable<Page<T>> {
-        let url = `${this.getUrl()}/page/
-        ?page=${page}&size=${size}`;
+        let url = `${this.getUrl()}/page/?page=${page}&size=${size}`;
         if (order) {
             url += `&order=${order}`;
         }
@@ -57,6 +56,7 @@ export abstract class CrudService<T, ID> {
 
     delete(id: ID): Observable<void> {
         const url = `${this.getUrl()}/${id}`;
+        console.log(url);
         return this.http.delete<void>(url);
     }
 }

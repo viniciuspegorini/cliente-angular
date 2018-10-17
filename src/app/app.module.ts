@@ -19,6 +19,8 @@ import { GeneroService } from './genero/genero.service';
 import { HttpClientModule } from '@angular/common/http';
 import { ProdutoraComponent } from './produtora/produtora.component';
 import { ProdutoraService } from './produtora/produtora.service';
+import { SerieComponent } from './serie/serie.component';
+import { SerieService } from './serie/serie.service';
 
 @NgModule({
   declarations: [
@@ -26,7 +28,8 @@ import { ProdutoraService } from './produtora/produtora.service';
     MenuComponent,
     IndexComponent,
     GeneroComponent,
-    ProdutoraComponent
+    ProdutoraComponent,
+    SerieComponent
   ],
   imports: [
     BrowserModule,
@@ -42,7 +45,8 @@ import { ProdutoraService } from './produtora/produtora.service';
   providers: [
     GeneroService,
     ProdutoraService,
-    ConfirmationService
+    ConfirmationService,
+    SerieService
   ],
   bootstrap: [AppComponent]
 })
