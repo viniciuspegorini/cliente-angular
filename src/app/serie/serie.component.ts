@@ -2,7 +2,11 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import {DataTable} from 'primeng/components/datatable/datatable';
 import { Serie } from '../model/serie';
 import { SerieService } from './serie.service';
-import { LazyLoadEvent } from 'primeng/api';
+import { LazyLoadEvent, Message, ConfirmationService } from 'primeng/api';
+import { Genero } from '../model/genero';
+import { Produtora } from '../model/produtora';
+import { GeneroService } from '../genero/genero.service';
+import { ProdutoraService } from '../produtora/produtora.service';
 
 @Component({
   selector: 'app-serie',
@@ -16,9 +20,24 @@ export class SerieComponent implements OnInit {
   series: Serie[];
   totalRecords: number;
 
-  constructor(private serieService: SerieService) { }
+  generos: Genero[];
+  produtoras: Produtora[];
+  produtorasFiltered: Produtora[];
+  serieEdit: Serie = new Serie();
+
+  showDialog = false;
+  msgs: Message[] = [];
+
+  constructor(private serieService: SerieService,
+       private confirmationService: ConfirmationService,
+       private generoService: GeneroService,
+       private produtoraService: ProdutoraService) { }
 
   ngOnInit() {
+    this.generoService.findAll().subscribe(
+            e => this.generos = e);
+    this.produtoraService.findAll().subscribe(
+            e => this.produtoras = e);
   }
 
   findAllPaged(page: number, size: number) {
@@ -36,4 +55,41 @@ export class SerieComponent implements OnInit {
     }, 250);
   }
 
+  newEntity() {
+    this.showDialog = true;
+    this.serieEdit = new Serie();
+    this.serieEdit.genero = this.generos[0];
+  }
+
+  search(event) {
+    this.produtorasFiltered = this.produtoras
+        .filter(
+    p => p.nome.toLocaleLowerCase()
+      .includes(event.query.toLocaleLowerCase())
+    );
+  }
+
+  save() {
+    this.serieService.save(this.serieEdit).
+      subscribe(e => {
+        this.serieEdit = new Serie();
+        
+        this.dataTable.reset();
+        
+        this.showDialog = false;
+        this.msgs = [{
+          severity: 'success',
+          summary: 'Confirmado',
+          detail: 'Registro salvo com sucesso'
+        }];
+      }, error => {
+        this.msgs = [{
+          severity: 'error',
+          summary: 'Erro',
+          detail: 'Certifique-se de preencher todos dos campos.'
+        }];
+      }
+      );
+
+  }
 }

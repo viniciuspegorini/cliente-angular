@@ -9,6 +9,15 @@ import {ConfirmDialogModule} from 'primeng/confirmdialog';
 import {GrowlModule} from 'primeng/growl';
 import {DialogModule} from 'primeng/dialog';
 import {ConfirmationService} from 'primeng/api';
+import {CalendarModule} from 'primeng/calendar';
+import {DropdownModule} from 'primeng/dropdown';
+import {AutoCompleteModule} from 'primeng/autocomplete';
+import {PanelModule} from 'primeng/panel';
+import {SpinnerModule} from 'primeng/spinner';
+import {FileUploadModule} from 'primeng/fileupload';
+import {TabViewModule} from 'primeng/tabview';
+
+
 
 import { AppComponent } from './app.component';
 import { MenuComponent } from './menu/menu.component';
@@ -21,6 +30,7 @@ import { ProdutoraComponent } from './produtora/produtora.component';
 import { ProdutoraService } from './produtora/produtora.service';
 import { SerieComponent } from './serie/serie.component';
 import { SerieService } from './serie/serie.service';
+import { from } from 'rxjs';
 
 @NgModule({
   declarations: [
@@ -40,7 +50,14 @@ import { SerieService } from './serie/serie.service';
     TableModule,
     ConfirmDialogModule,
     GrowlModule,
-    DialogModule
+    DialogModule,
+    CalendarModule,
+    DropdownModule,
+    AutoCompleteModule,
+    PanelModule,
+    SpinnerModule,
+    FileUploadModule,
+    TabViewModule
   ],
   providers: [
     GeneroService,
