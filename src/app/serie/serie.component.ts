@@ -73,9 +73,7 @@ export class SerieComponent implements OnInit {
     this.serieService.save(this.serieEdit).
       subscribe(e => {
         this.serieEdit = new Serie();
-        
         this.dataTable.reset();
-        
         this.showDialog = false;
         this.msgs = [{
           severity: 'success',
@@ -90,6 +88,40 @@ export class SerieComponent implements OnInit {
         }];
       }
       );
+  }
 
+  cancel() {
+    this.showDialog = false;
+  }
+
+  edit(serie: Serie) {
+    this.serieEdit = Object.assign({}, serie);
+    this.showDialog = true;
+  }
+
+  delete(serie: Serie) {
+    this.confirmationService.confirm({
+      message: 'Essa ação não pode ser desfeita.',
+      header: 'Deseja remover esse registro?',
+      acceptLabel: 'Confirmar',
+      rejectLabel: 'Cancelar',
+      accept: () => {
+        this.serieService.delete(serie.id)
+          .subscribe(() => {
+            this.dataTable.reset();
+            this.msgs = [{
+              severity: 'success',
+              summary: 'Removido',
+              detail: 'Registro removido com sucesso'
+            }];
+          }, error => {
+            this.msgs = [{
+              severity: 'error',
+              summary: 'Erro',
+              detail: 'Falha ao remover registro.'
+            }];
+          });
+      }
+    });
   }
 }
