@@ -7,6 +7,7 @@ import { Genero } from '../model/genero';
 import { Produtora } from '../model/produtora';
 import { GeneroService } from '../genero/genero.service';
 import { ProdutoraService } from '../produtora/produtora.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-serie',
@@ -17,6 +18,7 @@ export class SerieComponent implements OnInit {
 
   @ViewChild('dt') dataTable: DataTable;
 
+  cols: any[];
   series: Serie[];
   totalRecords: number;
 
@@ -28,6 +30,10 @@ export class SerieComponent implements OnInit {
   showDialog = false;
   msgs: Message[] = [];
 
+  uploadedFiles: any[] = [];
+  urlApi: string = environment.api;
+  today: number = Date.now();
+
   constructor(private serieService: SerieService,
        private confirmationService: ConfirmationService,
        private generoService: GeneroService,
@@ -38,6 +44,15 @@ export class SerieComponent implements OnInit {
             e => this.generos = e);
     this.produtoraService.findAll().subscribe(
             e => this.produtoras = e);
+            this.cols = [
+              { field: 'id', header: 'Código' },
+              { field: 'nome', header: 'Nome' },
+              { field: 'nota', header: 'Nota' },
+              { field: 'dataEstreia', header: 'Estréia' },
+              { field: 'dataEncerramento', header: 'Encerramento' },
+              { field: 'genero.nome', header: 'Gênero' },
+              { field: 'produtora.nome', header: 'Produtora' },
+            ];
   }
 
   findAllPaged(page: number, size: number) {
@@ -47,12 +62,23 @@ export class SerieComponent implements OnInit {
       .subscribe(e => this.series = e.content);
   }
 
+  findSearchPaged(filter: string, page: number, size: number) {
+    this.serieService.count().subscribe(e => this.totalRecords = e);
+    this.serieService.findSearchPageable(filter, page, size).subscribe(e => this.series = e.content);
+  }
+
   load(event: LazyLoadEvent) {
     const currentPage = event.first / event.rows;
     const maxRecords = event.rows;
-    setTimeout(() => {
-      this.findAllPaged(currentPage, maxRecords);
-    }, 250);
+    if (event.globalFilter) {
+      setTimeout(() => {
+        this.findSearchPaged(event.globalFilter, currentPage, maxRecords);
+      }, 250);
+    } else {
+      setTimeout(() => {
+        this.findAllPaged(currentPage, maxRecords);
+      }, 250);
+    }
   }
 
   newEntity() {
@@ -95,6 +121,7 @@ export class SerieComponent implements OnInit {
   }
 
   edit(serie: Serie) {
+    this.today = Date.now();
     this.serieEdit = Object.assign({}, serie);
     this.showDialog = true;
   }
@@ -123,5 +150,19 @@ export class SerieComponent implements OnInit {
           });
       }
     });
+  }
+
+  onUpload(event) {
+    for (const file of event.files) {
+      this.uploadedFiles.push(file);
+    }
+    this.msgs = [{severity : 'info',
+                  summary: 'Arquivo salvo!',
+          detail: 'Arquivo salvo com sucesso.'}];
+    setTimeout(() => {
+      this.dataTable.reset();
+      this.showDialog = false;
+      this.uploadedFiles = [];
+    }, 500);
   }
 }

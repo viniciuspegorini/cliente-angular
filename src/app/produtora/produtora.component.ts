@@ -10,11 +10,15 @@ import { ProdutoraService } from './produtora.service';
 export class ProdutoraComponent implements OnInit {
 
   produtoras: Produtora[];
-
+  cols: any[];
   constructor(private produtoraService: ProdutoraService) { }
 
   ngOnInit() {
     this.findAll();
+    this.cols = [
+      { field: 'id', header: 'Código' },
+      { field: 'nome', header: 'Nome' }
+    ];
   }
 
   findAll() {
