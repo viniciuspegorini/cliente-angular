@@ -26,4 +26,9 @@ export class SerieService
     }
     return this.http.get<Page<Serie>>(url);
   }
+
+  searchCount(filter: string): Observable<number> {
+    const url = `${this.getUrl()}/search/count?filter=${filter}`;
+    return this.http.get<number>(url);
+  }
 }

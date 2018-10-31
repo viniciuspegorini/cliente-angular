@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import {DataTable} from 'primeng/components/datatable/datatable';
+import { DataTable } from 'primeng/components/datatable/datatable';
 import { Serie } from '../model/serie';
 import { SerieService } from './serie.service';
 import { LazyLoadEvent, Message, ConfirmationService } from 'primeng/api';
@@ -35,24 +35,24 @@ export class SerieComponent implements OnInit {
   today: number = Date.now();
 
   constructor(private serieService: SerieService,
-       private confirmationService: ConfirmationService,
-       private generoService: GeneroService,
-       private produtoraService: ProdutoraService) { }
+    private confirmationService: ConfirmationService,
+    private generoService: GeneroService,
+    private produtoraService: ProdutoraService) { }
 
   ngOnInit() {
     this.generoService.findAll().subscribe(
-            e => this.generos = e);
+      e => this.generos = e);
     this.produtoraService.findAll().subscribe(
-            e => this.produtoras = e);
-            this.cols = [
-              { field: 'id', header: 'Código' },
-              { field: 'nome', header: 'Nome' },
-              { field: 'nota', header: 'Nota' },
-              { field: 'dataEstreia', header: 'Estréia' },
-              { field: 'dataEncerramento', header: 'Encerramento' },
-              { field: 'genero.nome', header: 'Gênero' },
-              { field: 'produtora.nome', header: 'Produtora' },
-            ];
+      e => this.produtoras = e);
+    this.cols = [
+      { field: 'id', header: 'Código' },
+      { field: 'nome', header: 'Nome' },
+      { field: 'nota', header: 'Nota' },
+      { field: 'dataEstreia', header: 'Estréia' },
+      { field: 'dataEncerramento', header: 'Encerramento' },
+      { field: 'genero.nome', header: 'Gênero' },
+      { field: 'produtora.nome', header: 'Produtora' },
+    ];
   }
 
   findAllPaged(page: number, size: number) {
@@ -63,7 +63,7 @@ export class SerieComponent implements OnInit {
   }
 
   findSearchPaged(filter: string, page: number, size: number) {
-    this.serieService.count().subscribe(e => this.totalRecords = e);
+    this.serieService.searchCount(filter).subscribe(e => this.totalRecords = e);
     this.serieService.findSearchPageable(filter, page, size).subscribe(e => this.series = e.content);
   }
 
@@ -89,10 +89,10 @@ export class SerieComponent implements OnInit {
 
   search(event) {
     this.produtorasFiltered = this.produtoras
-        .filter(
-    p => p.nome.toLocaleLowerCase()
-      .includes(event.query.toLocaleLowerCase())
-    );
+      .filter(
+        p => p.nome.toLocaleLowerCase()
+          .includes(event.query.toLocaleLowerCase())
+      );
   }
 
   save() {
@@ -156,9 +156,11 @@ export class SerieComponent implements OnInit {
     for (const file of event.files) {
       this.uploadedFiles.push(file);
     }
-    this.msgs = [{severity : 'info',
-                  summary: 'Arquivo salvo!',
-          detail: 'Arquivo salvo com sucesso.'}];
+    this.msgs = [{
+      severity: 'info',
+      summary: 'Arquivo salvo!',
+      detail: 'Arquivo salvo com sucesso.'
+    }];
     setTimeout(() => {
       this.dataTable.reset();
       this.showDialog = false;
