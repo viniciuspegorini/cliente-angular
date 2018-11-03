@@ -64,7 +64,6 @@ export class LoginService implements CanActivate {
     return this.http.post<AccessToken>(`${environment.api}/oauth/token`, params.toString(), { headers: headers })
       .pipe(
         map(e => {
-          console.log(e);
           Object.keys(e).forEach(key => localStorage.setItem(key, e[key]));
           this.isAuthenticated.next(true);
           return e;
