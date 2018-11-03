@@ -25,12 +25,15 @@ import { IndexComponent } from './index/index.component';
 import { AppRoutingModule } from './app-routing.module';
 import { GeneroComponent } from './genero/genero.component';
 import { GeneroService } from './genero/genero.service';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ProdutoraComponent } from './produtora/produtora.component';
 import { ProdutoraService } from './produtora/produtora.service';
 import { SerieComponent } from './serie/serie.component';
 import { SerieService } from './serie/serie.service';
 import { from } from 'rxjs';
+import { HttpClientInterceptor } from './http-client.interceptor';
+import { LoginService } from './login/login.service';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +42,8 @@ import { from } from 'rxjs';
     IndexComponent,
     GeneroComponent,
     ProdutoraComponent,
-    SerieComponent
+    SerieComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -60,10 +64,16 @@ import { from } from 'rxjs';
     TabViewModule
   ],
   providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpClientInterceptor,
+      multi: true
+    },
     GeneroService,
     ProdutoraService,
     ConfirmationService,
-    SerieService
+    SerieService,
+    LoginService
   ],
   bootstrap: [AppComponent]
 })
